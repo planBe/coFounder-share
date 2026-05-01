@@ -1,0 +1,9 @@
+# macOS
+.DS_Store
+
+# Editor swap files
+*.swp
+*~
+
+# Project-level Claude Code state (don't commit personal session state)
+.claude/
