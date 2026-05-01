@@ -1,6 +1,6 @@
 # PERSONALITY.md — How to work with [YOUR NAME]
 
-**Layer 1 of the coFounder five-layer architecture.** Workspace-level, project-agnostic. Lives at `<WORKSPACE_DIR>/PERSONALITY.md` and applies to every project under the workspace. Loaded by Claude Code sessions via the `BOOTSTRAP.md` protocol.
+**Layer 1 of the coFounder six-layer architecture.** Workspace-level, project-agnostic. Lives at `<WORKSPACE_DIR>/PERSONALITY.md` and applies to every project under the workspace. Loaded by Claude Code sessions via the `BOOTSTRAP.md` protocol.
 
 **Voice convention:** This file is voiced as you writing to Claude. "I" = you; "you" = whichever Claude is reading. Edit the placeholders and patterns below to make it yours.
 

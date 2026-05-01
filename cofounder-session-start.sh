@@ -17,14 +17,15 @@ case "$PD" in
     cat <<EOF | jq -Rs '{"hookSpecificOutput":{"hookEventName":"SessionStart","additionalContext":.}}'
 # coFounder bootstrap (auto-loaded by SessionStart hook)
 
-You're a Claude Code session in a coFounder workspace project. Per the workspace's BOOTSTRAP.md, this workspace uses a five-layer file architecture for persistent context. Read these layer files via the Read tool before substantive work. If a file doesn't exist, flag the absence — don't skip silently.
+You're a Claude Code session in a coFounder workspace project. Per the workspace's BOOTSTRAP.md, this workspace uses a six-layer file architecture for persistent context. Read these layer files via the Read tool before substantive work. If a file doesn't exist, flag the absence — don't skip silently.
 
 1. \`$PD/RESUMING.md\` — Layer 5 (most-current state; read first)
-2. \`$WS/BOOTSTRAP.md\` — read protocol, five-layer architecture
-3. \`$WS/PERSONALITY.md\` — working-style
-4. \`$PD/PROJECT_CONTEXT.md\` — Layer 2 (project state)
-5. \`$PD/SESSION_NOTES.md\` — Layer 3 (rolling log; use Read with offset for last 2-3 entries if file is long)
-6. \`$PD/DECISIONS.md\` — Layer 4 (decision history)
+2. \`$WS/BOOTSTRAP.md\` — read protocol, six-layer architecture
+3. \`$WS/PERSONALITY.md\` — Layer 1 (working-style, instance-naming convention)
+4. \`$WS/CROSS_CLAUDE_PROTOCOL.md\` — Layer 6 (cross-Claude communication format)
+5. \`$PD/PROJECT_CONTEXT.md\` — Layer 2 (project state)
+6. \`$PD/SESSION_NOTES.md\` — Layer 3 (rolling log; use Read with offset for last 2-3 entries if file is long)
+7. \`$PD/DECISIONS.md\` — Layer 4 (decision history)
 
 Then proceed with substantive work.
 EOF

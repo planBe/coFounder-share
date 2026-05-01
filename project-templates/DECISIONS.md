@@ -1,6 +1,6 @@
 # DECISIONS.md — [PROJECT NAME]
 
-**Layer 4 of the coFounder five-layer architecture.** Append-only log of meaningful decisions with reasoning. Loaded by Claude sessions on session start (per `BOOTSTRAP.md`).
+**Layer 4 of the coFounder six-layer architecture.** Append-only log of meaningful decisions with reasoning. Loaded by Claude sessions on session start (per `BOOTSTRAP.md`).
 
 **Format per entry:**
 - **Date** — when the decision was made (absolute, ISO format)

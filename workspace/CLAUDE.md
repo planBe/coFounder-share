@@ -2,7 +2,7 @@
 
 Auto-loaded via Claude Code's CLAUDE.md cascade for any session whose cwd is inside this workspace. Substantive content lives in the named-layer files. Read these next:
 
-- `<WORKSPACE_DIR>/BOOTSTRAP.md` — read protocol, five-layer architecture
+- `<WORKSPACE_DIR>/BOOTSTRAP.md` — read protocol, six-layer architecture
 - `<WORKSPACE_DIR>/PERSONALITY.md` — Layer 1, working-style + instance-naming convention
 - `<WORKSPACE_DIR>/PATTERNS.md` — cross-project pattern transfer (read on demand per BOOTSTRAP)
 - `<WORKSPACE_DIR>/TOOLBOX.md` — non-Claude AI tools catalog (read on demand)

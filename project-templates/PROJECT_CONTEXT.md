@@ -1,6 +1,6 @@
 # PROJECT_CONTEXT.md — [PROJECT NAME]
 
-**Layer 2 of the coFounder five-layer architecture.** Per-project, lives at the project root. Authoritative source for what this project is, what's built, what's decided, what's in scope, and the build stack.
+**Layer 2 of the coFounder six-layer architecture.** Per-project, lives at the project root. Authoritative source for what this project is, what's built, what's decided, what's in scope, and the build stack.
 
 ---
 

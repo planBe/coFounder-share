@@ -1,6 +1,6 @@
 # RESUMING.md — [PROJECT NAME]
 
-**Layer 5 of the coFounder five-layer architecture.** What the previous session was actively in the middle of when it ended — highest-priority file when resuming work.
+**Layer 5 of the coFounder six-layer architecture.** What the previous session was actively in the middle of when it ended — highest-priority file when resuming work.
 
 **Last updated:** [YYYY-MM-DD]
 

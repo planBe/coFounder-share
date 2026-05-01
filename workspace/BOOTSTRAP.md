@@ -16,7 +16,7 @@
 
 If a session has started at the wrong cwd, ask the user which project they intend and recommend relaunching from there before doing substantive work.
 
-## The five-layer architecture
+## The six-layer architecture
 
 coFounder is a set of markdown files. Any Claude Code session in a coFounder project reads them at startup. Each layer serves a distinct persistence purpose.
 
@@ -27,6 +27,7 @@ coFounder is a set of markdown files. Any Claude Code session in a coFounder pro
 | 3 | Recent History | `SESSION_NOTES.md` | Per project | Append-only, absolute-dated rolling log of what was done, blocked, planned next. |
 | 4 | Decision History | `DECISIONS.md` | Per project | Append-only log of meaningful decisions with reasoning. |
 | 5 | Working Memory | `RESUMING.md` | Per project | What the previous session was actively in the middle of when it ended. Highest-priority file for resuming work. |
+| 6 | Cross-Claude Protocol | `CROSS_CLAUDE_PROTOCOL.md` | Workspace | Standard format for communication between Claude instances when you relay decisions, context, or directives between them. Loaded automatically alongside `PERSONALITY.md`. |
 
 ## Read order at session start
 
@@ -35,9 +36,10 @@ The `SessionStart` hook in `~/.claude/settings.json` surfaces a directive listin
 1. `<project>/RESUMING.md` (Layer 5 — most current, read first)
 2. `<WORKSPACE_DIR>/BOOTSTRAP.md` (this file)
 3. `<WORKSPACE_DIR>/PERSONALITY.md` (Layer 1)
-4. `<project>/PROJECT_CONTEXT.md` (Layer 2)
-5. `<project>/SESSION_NOTES.md` (Layer 3 — paged Read for last 2–3 entries if file is long)
-6. `<project>/DECISIONS.md` (Layer 4)
+4. `<WORKSPACE_DIR>/CROSS_CLAUDE_PROTOCOL.md` (Layer 6, cross-Claude communication format)
+5. `<project>/PROJECT_CONTEXT.md` (Layer 2)
+6. `<project>/SESSION_NOTES.md` (Layer 3 — paged Read for last 2–3 entries if file is long)
+7. `<project>/DECISIONS.md` (Layer 4)
 
 If a layer file doesn't exist for the current project, note its absence rather than skipping silently — the user may want to bootstrap that layer before work continues.
 
@@ -73,6 +75,7 @@ Claude Code's hardcoded convention is that `CLAUDE.md` files in the cwd cascade 
 - **`SESSION_NOTES.md`** — append-only. Same-day saves. Absolute dates. Written before context pressure ends a session.
 - **`DECISIONS.md`** — append-only. Written when meaningful decisions are made.
 - **`RESUMING.md`** — updated at the end of each session or when work shifts mid-session. Should answer: "If a new session starts right now, what should it know to continue this work?"
+- **`CROSS_CLAUDE_PROTOCOL.md`** — living document. Updated when you (or Claude) identify gaps or refinements in the cross-instance communication format.
 
 ## Rule-revisability is first-class
 
@@ -88,6 +91,6 @@ If a rule doesn't survive contact with reality, kill it. Don't just add a new on
 
 The hook script at `~/.claude/cofounder-session-start.sh` (registered in `~/.claude/settings.json`) auto-fires on every Claude Code session launched inside the workspace. Its output is a small directive (~1.3KB) injected silently into the model's `additionalContext` block — not rendered as user-visible text. The hook surfaces a directive listing the layer files; Claude reads each via the Read tool before substantive work.
 
-**Why a directive, not inlined content:** Claude Code offloads `additionalContext` payloads above ~10K characters to a file rather than inlining them. Inlining all six layer files exceeds that threshold. The pure-pointer design (~1.3KB regardless of project) stays well under and shifts the read cost onto explicit Read tool calls at session start.
+**Why a directive, not inlined content:** Claude Code offloads `additionalContext` payloads above ~10K characters to a file rather than inlining them. Inlining all the layer files would exceed that threshold. The pure-pointer design (~1.3KB regardless of project) stays well under and shifts the read cost onto explicit Read tool calls at session start.
 
 **Outside the workspace:** the hook falls back to inlining `RESUMING.md` if it exists at the launched cwd, silent otherwise. Preserves expected hook behavior for any non-workspace projects.
