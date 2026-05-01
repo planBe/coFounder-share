@@ -36,6 +36,7 @@ Then edit each file to replace placeholders:
 - **`CLAUDE.md`** (the workspace umbrella) — same `<WORKSPACE_DIR>` find-and-replace.
 - **`PATTERNS.md`** — start mostly empty; fill in cross-project patterns as you discover them. The "Process discipline that always transfers" and "Recurring mistakes to watch for" sections are pre-populated with patterns that are universally useful — keep, edit, or remove as fits your style.
 - **`TOOLBOX.md`** — start empty; fill in non-Claude AI tools as you adopt them.
+- **`OPERATIONS.md`** — start empty; incident-driven and append-only. Captures machine inventory, storage volumes, backup posture, and runbooks **earned by real incidents**. Don't pre-populate — the value is in actually-captured content. Workspace-level (sibling to PATTERNS/TOOLBOX) but session-start (loaded alongside `CROSS_CLAUDE_PROTOCOL.md`) rather than on-demand.
 
 ## Step 3: Install the SessionStart hook
 
@@ -112,12 +113,12 @@ Then in the launched Claude Code session, paste:
 
 > What auto-loaded at startup? List the read directives you see and confirm you've read each layer file.
 
-**Pass:** Claude lists the six layer files (RESUMING, BOOTSTRAP, PERSONALITY, PROJECT_CONTEXT, SESSION_NOTES, DECISIONS) and reports reading them via the Read tool. Working-style register matches what you put in `PERSONALITY.md`.
+**Pass:** Claude lists the eight reads (RESUMING, BOOTSTRAP, PERSONALITY, CROSS_CLAUDE_PROTOCOL, OPERATIONS, PROJECT_CONTEXT, SESSION_NOTES, DECISIONS) and reports reading them via the Read tool. Working-style register matches what you put in `PERSONALITY.md`.
 
 **Fail diagnostics:**
 - Hook isn't firing: `jq empty ~/.claude/settings.json` to check JSON validity. Run the hook manually: `CLAUDE_PROJECT_DIR="$WORKSPACE_DIR/my-first-project" bash ~/.claude/cofounder-session-start.sh` — should output JSON with the bootstrap directive.
 - Hook fires but Claude ignores it: directives in `additionalContext` are advisory, not enforced. If this becomes a real problem you can add system-prompt-level enforcement via project-level `CLAUDE.md` files (the cascade auto-loads those).
-- `additionalContext` got offloaded: Claude Code has a ~10K-char threshold above which payloads get persisted to a file rather than inlined. The hook in this share stays well under that (~1.3KB). If you extend the hook to inline more content, you may hit this — see Anthropic's GitHub issue #13650 for context.
+- `additionalContext` got offloaded: Claude Code has a ~10K-char threshold above which payloads get persisted to a file rather than inlined. The hook in this share stays well under that (~1.7KB). If you extend the hook to inline more content, you may hit this — see Anthropic's GitHub issue #13650 for context.
 
 ## What's not in this share
 

@@ -37,11 +37,14 @@ The `SessionStart` hook in `~/.claude/settings.json` surfaces a directive listin
 2. `<WORKSPACE_DIR>/BOOTSTRAP.md` (this file)
 3. `<WORKSPACE_DIR>/PERSONALITY.md` (Layer 1)
 4. `<WORKSPACE_DIR>/CROSS_CLAUDE_PROTOCOL.md` (Layer 6, cross-Claude communication format)
-5. `<project>/PROJECT_CONTEXT.md` (Layer 2)
-6. `<project>/SESSION_NOTES.md` (Layer 3 — paged Read for last 2–3 entries if file is long)
-7. `<project>/DECISIONS.md` (Layer 4)
+5. `<WORKSPACE_DIR>/OPERATIONS.md` (workspace-level operations reference — machines, storage, backup posture, runbooks; **not a layer** by current architecture, but session-start hooked alongside `CROSS_CLAUDE_PROTOCOL.md`)
+6. `<project>/PROJECT_CONTEXT.md` (Layer 2)
+7. `<project>/SESSION_NOTES.md` (Layer 3 — paged Read for last 2–3 entries if file is long)
+8. `<project>/DECISIONS.md` (Layer 4)
 
 If a layer file doesn't exist for the current project, note its absence rather than skipping silently — the user may want to bootstrap that layer before work continues.
+
+**OPERATIONS.md placement note:** Position 5 was chosen so workspace-level reads stay grouped (positions 2–5: BOOTSTRAP, PERSONALITY, CROSS_CLAUDE_PROTOCOL, OPERATIONS) before per-project reads (positions 1 + 6–8). `OPERATIONS.md` is **not** Layer 7 — the formal six-layer architecture (the table above) stands. `OPERATIONS.md` sits alongside `PATTERNS.md` and `TOOLBOX.md` as a workspace-level file; it differs in being session-start rather than on-demand. Whether to formalize as Layer 7 is a deferred architectural call.
 
 ## On-demand reads
 
@@ -89,8 +92,8 @@ If a rule doesn't survive contact with reality, kill it. Don't just add a new on
 
 ## SessionStart hook (active)
 
-The hook script at `~/.claude/cofounder-session-start.sh` (registered in `~/.claude/settings.json`) auto-fires on every Claude Code session launched inside the workspace. Its output is a small directive (~1.3KB) injected silently into the model's `additionalContext` block — not rendered as user-visible text. The hook surfaces a directive listing the layer files; Claude reads each via the Read tool before substantive work.
+The hook script at `~/.claude/cofounder-session-start.sh` (registered in `~/.claude/settings.json`) auto-fires on every Claude Code session launched inside the workspace. Its output is a small directive (~1.7KB for the current 8-read directive) injected silently into the model's `additionalContext` block — not rendered as user-visible text. The hook surfaces a directive listing the workspace + project reads; Claude reads each via the Read tool before substantive work.
 
-**Why a directive, not inlined content:** Claude Code offloads `additionalContext` payloads above ~10K characters to a file rather than inlining them. Inlining all the layer files would exceed that threshold. The pure-pointer design (~1.3KB regardless of project) stays well under and shifts the read cost onto explicit Read tool calls at session start.
+**Why a directive, not inlined content:** Claude Code offloads `additionalContext` payloads above ~10K characters to a file rather than inlining them. Inlining all the layer files would exceed that threshold. The pure-pointer design (~1.7KB regardless of project) stays well under and shifts the read cost onto explicit Read tool calls at session start.
 
 **Outside the workspace:** the hook falls back to inlining `RESUMING.md` if it exists at the launched cwd, silent otherwise. Preserves expected hook behavior for any non-workspace projects.
