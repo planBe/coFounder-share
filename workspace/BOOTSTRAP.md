@@ -100,8 +100,8 @@ If a rule doesn't survive contact with reality, kill it. Don't just add a new on
 
 ## SessionStart hook (active)
 
-The hook script at `~/.claude/cofounder-session-start.sh` (registered in `~/.claude/settings.json`) auto-fires on every Claude Code session launched inside the workspace. Its output is a small directive (~1.7KB for the current 8-read directive) injected silently into the model's `additionalContext` block — not rendered as user-visible text. The hook surfaces a directive listing the workspace + project reads; Claude reads each via the Read tool before substantive work.
+The hook script at `~/.claude/cofounder-session-start.sh` (registered in `~/.claude/settings.json`) auto-fires on every Claude Code session launched inside the workspace. Its output is a small directive (~1.5KB for the current 9-read directive) injected silently into the model's `additionalContext` block — not rendered as user-visible text. The hook surfaces a directive listing the workspace + project reads; Claude reads each via the Read tool before substantive work.
 
-**Why a directive, not inlined content:** Claude Code offloads `additionalContext` payloads above ~10K characters to a file rather than inlining them. Inlining all the layer files would exceed that threshold. The pure-pointer design (~1.7KB regardless of project) stays well under and shifts the read cost onto explicit Read tool calls at session start.
+**Why a directive, not inlined content:** Claude Code offloads `additionalContext` payloads above ~10K characters to a file rather than inlining them. Inlining all the layer files would exceed that threshold. The pure-pointer design (~1.5KB at 9 reads, scales with reference count not file size) stays well under and shifts the read cost onto explicit Read tool calls at session start.
 
 **Outside the workspace:** the hook falls back to inlining `RESUMING.md` if it exists at the launched cwd, silent otherwise. Preserves expected hook behavior for any non-workspace projects.
