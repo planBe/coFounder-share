@@ -24,9 +24,10 @@ You're a Claude Code session in a coFounder workspace project. Per the workspace
 3. \`$WS/PERSONALITY.md\` — Layer 1 (working-style, instance-naming convention)
 4. \`$WS/CROSS_CLAUDE_PROTOCOL.md\` — Layer 6 (cross-Claude communication format)
 5. \`$WS/OPERATIONS.md\` — workspace-level operations reference (machines, storage, backup posture, runbooks)
-6. \`$PD/PROJECT_CONTEXT.md\` — Layer 2 (project state)
-7. \`$PD/SESSION_NOTES.md\` — Layer 3 (rolling log; use Read with offset for last 2-3 entries if file is long)
-8. \`$PD/DECISIONS.md\` — Layer 4 (decision history)
+6. \`$WS/INCIDENT_LEARNINGS.md\` — workspace-level reference; active workflow disciplines from past incidents. Grep the "Active rules" section at the bottom for the cumulative discipline list before starting substantive work.
+7. \`$PD/PROJECT_CONTEXT.md\` — Layer 2 (project state)
+8. \`$PD/SESSION_NOTES.md\` — Layer 3 (rolling log; use Read with offset for last 2-3 entries if file is long)
+9. \`$PD/DECISIONS.md\` — Layer 4 (decision history)
 
 Then proceed with substantive work.
 EOF

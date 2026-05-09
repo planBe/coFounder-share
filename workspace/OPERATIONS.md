@@ -4,7 +4,7 @@
 
 **Loading:** Session-start. Surfaced by the SessionStart hook directive at position 5, between `CROSS_CLAUDE_PROTOCOL.md` and the project's `PROJECT_CONTEXT.md`. Workspace-level reads stay grouped before per-project reads.
 
-**Note on architecture:** `OPERATIONS.md` is hooked at session-start but **is not formally Layer 7** in the current six-layer architecture. It's a workspace-level reference — same shape as `PATTERNS.md` and `TOOLBOX.md` — that happens to be session-start rather than on-demand. Whether to formalize as Layer 7 is a deferred architectural call.
+**Architecture role:** Workspace-level **reference** (sibling to `PATTERNS.md`, `TOOLBOX.md`, and `INCIDENT_LEARNINGS.md`), session-start hooked. **Not a layer.** See `BOOTSTRAP.md` "Workspace-level files: layer vs reference" for the placement rule: a file is a layer if it occupies one of the six conceptual roles; a file is a reference if it catalogs information the layers draw on. Load mechanism is independent of layer/reference status.
 
 **This file is incident-driven and append-only** — same shape as `DECISIONS.md`. Don't preemptively outline categories. Don't sketch what a "comprehensive" version should contain. Each addition should be earned by something that actually happened.
 

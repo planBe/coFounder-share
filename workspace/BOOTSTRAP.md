@@ -37,14 +37,22 @@ The `SessionStart` hook in `~/.claude/settings.json` surfaces a directive listin
 2. `<WORKSPACE_DIR>/BOOTSTRAP.md` (this file)
 3. `<WORKSPACE_DIR>/PERSONALITY.md` (Layer 1)
 4. `<WORKSPACE_DIR>/CROSS_CLAUDE_PROTOCOL.md` (Layer 6, cross-Claude communication format)
-5. `<WORKSPACE_DIR>/OPERATIONS.md` (workspace-level operations reference — machines, storage, backup posture, runbooks; **not a layer** by current architecture, but session-start hooked alongside `CROSS_CLAUDE_PROTOCOL.md`)
-6. `<project>/PROJECT_CONTEXT.md` (Layer 2)
-7. `<project>/SESSION_NOTES.md` (Layer 3 — paged Read for last 2–3 entries if file is long)
-8. `<project>/DECISIONS.md` (Layer 4)
+5. `<WORKSPACE_DIR>/OPERATIONS.md` (workspace-level operations reference — machines, storage, backup posture, runbooks; **not a layer**)
+6. `<WORKSPACE_DIR>/INCIDENT_LEARNINGS.md` (workspace-level reference — active workflow disciplines from past incidents; **not a layer**)
+7. `<project>/PROJECT_CONTEXT.md` (Layer 2)
+8. `<project>/SESSION_NOTES.md` (Layer 3 — paged Read for last 2–3 entries if file is long)
+9. `<project>/DECISIONS.md` (Layer 4)
 
 If a layer file doesn't exist for the current project, note its absence rather than skipping silently — the user may want to bootstrap that layer before work continues.
 
-**OPERATIONS.md placement note:** Position 5 was chosen so workspace-level reads stay grouped (positions 2–5: BOOTSTRAP, PERSONALITY, CROSS_CLAUDE_PROTOCOL, OPERATIONS) before per-project reads (positions 1 + 6–8). `OPERATIONS.md` is **not** Layer 7 — the formal six-layer architecture (the table above) stands. `OPERATIONS.md` sits alongside `PATTERNS.md` and `TOOLBOX.md` as a workspace-level file; it differs in being session-start rather than on-demand. Whether to formalize as Layer 7 is a deferred architectural call.
+### Workspace-level files: layer vs reference
+
+Workspace-level files split into two kinds:
+
+- **Layers** — `PERSONALITY.md` (Layer 1) and `CROSS_CLAUDE_PROTOCOL.md` (Layer 6). Each occupies one of the six conceptual roles in the architecture table above.
+- **References** — `PATTERNS.md`, `TOOLBOX.md`, `OPERATIONS.md`, and `INCIDENT_LEARNINGS.md`. Each catalogs information the layers draw on (cross-project patterns, non-Claude tools, operational context, post-incident workflow disciplines).
+
+**Placement rule:** A file is a **layer** if it occupies one of the six conceptual roles. A file is a **reference** if it catalogs information the layers draw on. Load mechanism (session-start vs on-demand) is configured per-file based on access patterns, and is **independent** of layer/reference status. OPERATIONS and INCIDENT_LEARNINGS are session-start because their content shapes how every session reasons (operational context for the former; active workflow disciplines for the latter); PATTERNS and TOOLBOX are on-demand because their value is bursty (consulted when a specific trigger fires) and pre-loading would dilute the session-start cost/benefit. Future additions choose load mechanism on the same access-pattern basis without changing layer/reference status.
 
 ## On-demand reads
 
