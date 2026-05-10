@@ -2,12 +2,10 @@
 
 Auto-loaded via Claude Code's CLAUDE.md cascade for any session whose cwd is inside this workspace. Substantive content lives in the named-layer files. Read these next:
 
-- `<WORKSPACE_DIR>/BOOTSTRAP.md` — read protocol, six-layer architecture
+- `<WORKSPACE_DIR>/BOOTSTRAP.md` — read protocol, six-layer architecture, full enumeration of workspace layers + references, on-demand read triggers, SessionStart hook documentation
 - `<WORKSPACE_DIR>/PERSONALITY.md` — Layer 1, working-style + instance-naming convention
-- `<WORKSPACE_DIR>/PATTERNS.md` — cross-project pattern transfer (read on demand per BOOTSTRAP)
-- `<WORKSPACE_DIR>/TOOLBOX.md` — non-Claude AI tools catalog (read on demand)
 
-The `SessionStart` hook in `~/.claude/settings.json` surfaces a directive listing the full read order including the current project's layer files. Follow it.
+The `SessionStart` hook in `~/.claude/settings.json` surfaces a directive listing the full read order including the current project's layer files. Follow it. (PATTERNS, TOOLBOX, CROSS_CLAUDE_PROTOCOL, OPERATIONS, INCIDENT_LEARNINGS — and the inbox-relay convention if you adopt it — are enumerated in BOOTSTRAP.md to keep this forwarder truly thin.)
 
 ## Launch from inside a project, not from this directory
 

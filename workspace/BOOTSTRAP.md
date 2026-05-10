@@ -45,6 +45,22 @@ The `SessionStart` hook in `~/.claude/settings.json` surfaces a directive listin
 
 If a layer file doesn't exist for the current project, note its absence rather than skipping silently — the user may want to bootstrap that layer before work continues.
 
+### Cross-instance relay inbox (optional convention)
+
+If you adopt a multi-instance setup (e.g., a persistent Claude Desktop conversation alongside one or more Claude Code sessions), consider creating an `inbox/` directory at one of your project roots as a cross-instance asynchronous relay. Each relay file's header documents what it carries; archive acted-on relays to `inbox/archive/`. Useful when paste-relay isn't possible (the sending instance closes terminal before the receiving instance launches; or you need the relay to persist in version-controlled form). After the layer reads, a session can check the inbox for any pending relays before starting substantive work.
+
+Lightweight convention, not a feature — adopt if useful, skip if you only use one instance.
+
+### Session close-out: `/close` slash command (recommended)
+
+When a session is wrapping up, Claude tends to default to "iterative close" — declares done, user asks "anything else?", Claude finds something, repeat. To make close-out deterministic, add a `/close` slash command at `~/.claude/commands/close.md` that instructs Claude to run a single comprehensive scan in parallel rather than iterating.
+
+A reasonable starting prompt for the slash command:
+
+> Re-read `INCIDENT_LEARNINGS.md` first (in case rules were added or refined this session). Then in **one message with parallel tool calls** (do NOT serialize), scan: (1) git state — working tree clean, commits made, pushed to origin; (2) layer files current — `RESUMING.md` + `SESSION_NOTES.md` + `DECISIONS.md` + `PROJECT_CONTEXT.md` reflect end-of-session reality, with cross-file consistency on any counts/positions/paths/IDs that were changed during the session; (3) any "in flight: X" notes in `RESUMING.md` still un-removed (un-removed means action incomplete); (4) conversation-only artifacts that haven't been canonicalized, plus any `inbox/` relay files acted-on but not yet archived; (5) background processes Claude started, cleaned up; (6) unanswered questions Claude asked the user that are pending response; (7) cross-project directives in other projects' `RESUMING.md` and recent `SESSION_NOTES.md` intended for the current session; (8) memory-write evaluation — did the user correct your approach in a way applicable to future sessions? Report findings explicitly per the convention "here's everything I found" (not "anything else?"). Don't add new rules during `/close`.
+
+Build the command, commit it to your `~/.claude/commands/` directory, and use `/close` instead of asking "what's left?" verbally. The slash command makes the close-out checklist mechanical rather than dependent on Claude remembering to apply it.
+
 ### Workspace-level files: layer vs reference
 
 Workspace-level files split into two kinds:

@@ -191,6 +191,19 @@ Add landmines as you encounter them — language syntax requirements, framework 
 
 *(empty — populate as you discover gotchas)*
 
+## Circle back on dropped threads
+
+You may tend to get ahead of yourself in conversations — multiple lines of thought running, decisions cascading from earlier reasoning, side-questions that shaped a call but didn't get explicit closure. By the time you reach a close, items have been dropped silently.
+
+The discipline to expect from Claude:
+
+- **Track items as they arise.** When a concern surfaces (yours or Claude's), a clarification is asked, or a side-question shapes a decision, Claude holds it on a list — doesn't trust memory.
+- **Surface unresolved items before close, not at close.** Bring them up at natural pause points so they can be addressed in flow rather than during wrap-up.
+- **Don't wait for you to ask "is there anything else?"** That question puts the integrity work on you. Claude should default to surfacing items proactively.
+- **Default to surfacing over assuming-resolved.** When an item could have been resolved implicitly (e.g., you moved past it without explicitly responding), the cost of asking again is small; the cost of dropping is real.
+
+This pairs with **Verification discipline**, **Calibrated confidence**, and **Continuity discipline** — together these are the workflow disciplines this layered-context system is engineered around. Adjust surfacing aggressiveness to match your own preference: tighten if you find threads dropping, loosen if surfacing becomes noise.
+
 ## How this file gets updated
 
 Updated rarely. Only when working-relationship patterns meaningfully shift. Triggered by you asking for an update, never automatically.

@@ -124,7 +124,7 @@ Then in the launched Claude Code session, paste:
 ## What's not in this share
 
 - **No SessionEnd hook.** Michael's setup has one that prints a continuity reminder; you can add similar by hand if you want.
-- **No setup script** — you just did the install manually because that's the right scope for a single-friend share.
+- **No setup script** — manual install is the right scope while the share is small enough to read end-to-end in 20 minutes. If you find yourself running this often (e.g., setting up multiple workspaces), automating the placeholder substitution is straightforward; the bare-minimum install stays manual on purpose.
 - **No auto-memory integration.** Claude Code's auto-memory directories (`~/.claude/projects/<sanitized-cwd>/memory/`) work as usual; coFounder is filesystem-based at the project level, separate from auto-memory.
 
 ---
