@@ -57,9 +57,19 @@ When a session is wrapping up, Claude tends to default to "iterative close" — 
 
 A reasonable starting prompt for the slash command:
 
-> Re-read `INCIDENT_LEARNINGS.md` first (in case rules were added or refined this session). Then in **one message with parallel tool calls** (do NOT serialize), scan: (1) git state — working tree clean, commits made, pushed to origin; (2) layer files current — `RESUMING.md` + `SESSION_NOTES.md` + `DECISIONS.md` + `PROJECT_CONTEXT.md` reflect end-of-session reality, with cross-file consistency on any counts/positions/paths/IDs that were changed during the session; (3) any "in flight: X" notes in `RESUMING.md` still un-removed (un-removed means action incomplete); (4) conversation-only artifacts that haven't been canonicalized, plus any `inbox/` relay files acted-on but not yet archived; (5) background processes Claude started, cleaned up; (6) unanswered questions Claude asked the user that are pending response; (7) cross-project directives in other projects' `RESUMING.md` and recent `SESSION_NOTES.md` intended for the current session; (8) memory-write evaluation — did the user correct your approach in a way applicable to future sessions? Report findings explicitly per the convention "here's everything I found" (not "anything else?"). Don't add new rules during `/close`.
+> Re-read `INCIDENT_LEARNINGS.md` first (in case rules were added or refined this session).
+>
+> **Step 0 — Apply Session Integrity Protocols throughout the scan.** The category checks below are the mechanical part. The spirit:
+>
+> - **Proactive surfacing:** during the scan, don't just check categories mechanically. Notice cross-pollination opportunities the categories don't explicitly cover. If you produced a major artifact this session, did anything else need to update to reference it? Widen scope beyond literal category checks.
+> - **Comprehensive close ("here's everything I found"):** report results as a complete list, not iteratively. Saying "anything else?" puts integrity work on the user.
+> - **Recognize failure modes by name:** if you notice yourself doing structure-scan over content-scan, asserting confident-without-verification, or letting the user surface things you should have surfaced — name the pattern.
+> - **Meta-test:** at any point ask "is the user doing work I should be doing?" If yes, absorb it back.
+> - **Retrospective surfacing:** widen scope of category 4 — items raised in conversation but not resolved by close, surface and either resolve, canonicalize, or escalate.
+>
+> Then in **one message with parallel tool calls** (do NOT serialize), scan: (1) git state — working tree clean, commits made, pushed to origin; (2) layer files current — `RESUMING.md` + `SESSION_NOTES.md` + `DECISIONS.md` + `PROJECT_CONTEXT.md` reflect end-of-session reality, with cross-file consistency on any counts/positions/paths/IDs that were changed during the session; (3) any "in flight: X" notes in `RESUMING.md` still un-removed (un-removed means action incomplete); (4) conversation-only artifacts that haven't been canonicalized, plus any `inbox/` relay files acted-on but not yet archived; (5) background processes Claude started, cleaned up; (6) unanswered questions Claude asked the user that are pending response; (7) cross-project directives in other projects' `RESUMING.md` and recent `SESSION_NOTES.md` intended for the current session; (8) memory-write evaluation — did the user correct your approach in a way applicable to future sessions? Report findings explicitly. Don't add new rules during `/close`.
 
-Build the command, commit it to your `~/.claude/commands/` directory, and use `/close` instead of asking "what's left?" verbally. The slash command makes the close-out checklist mechanical rather than dependent on Claude remembering to apply it.
+Build the command, commit it to your `~/.claude/commands/` directory, and use `/close` instead of asking "what's left?" verbally. The slash command makes the close-out checklist mechanical rather than dependent on Claude remembering to apply it. The Step 0 section above adds Session Integrity Protocols on top of the mechanical scan — the categories cover *what* to check; Step 0 covers *how* to check (proactive, comprehensive, self-aware, absorbing-not-deferring).
 
 ### Adversarial code review: persona-based slash commands (optional)
 
