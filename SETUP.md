@@ -81,6 +81,24 @@ cp ~/.claude/settings.json ~/.claude/settings.json.bak.pre-cofounder
 # inside the existing "hooks" object. Verify with: jq empty ~/.claude/settings.json
 ```
 
+## Step 3.5: (Optional but recommended) Pre-approve workspace reads
+
+Without this, Claude Code will prompt you to approve each layer-file Read at session start (per the hook's directive — currently 9 reads). To skip those prompts permanently, add a Read allow rule for your workspace path to `~/.claude/settings.json` under `permissions.allow`:
+
+```json
+{
+  "permissions": {
+    "allow": [
+      "Read(<WORKSPACE_DIR>/**)"
+    ]
+  }
+}
+```
+
+Replace `<WORKSPACE_DIR>` with your actual workspace path (e.g., `/Users/you/Documents/coFounder-workspace`). Affects every session in every project under that path; existing `permissions.deny` rules (sensitive paths like Keychain, Photos library, etc.) still take precedence.
+
+This is a workflow optimization, not a requirement — the system works without it; you'll just see more permission prompts at every session start.
+
 ## Step 4: Create your first project
 
 ```bash
