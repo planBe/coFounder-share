@@ -59,15 +59,28 @@ A reasonable starting prompt for the slash command:
 
 > Re-read `INCIDENT_LEARNINGS.md` first (in case rules were added or refined this session).
 >
-> **Step 0 — Apply Session Integrity Protocols throughout the scan.** The category checks below are the mechanical part. The spirit:
+> **Step 0 — Apply Session Integrity Protocols throughout the scan.** Spirit: proactive surfacing (notice cross-pollination opportunities); comprehensive close ("here's everything I found," not iterative); recognize failure modes by name; meta-test ("is the user doing work I should be doing?"); retrospective surfacing (items raised in conversation but not resolved).
 >
-> - **Proactive surfacing:** during the scan, don't just check categories mechanically. Notice cross-pollination opportunities the categories don't explicitly cover. If you produced a major artifact this session, did anything else need to update to reference it? Widen scope beyond literal category checks.
-> - **Comprehensive close ("here's everything I found"):** report results as a complete list, not iteratively. Saying "anything else?" puts integrity work on the user.
-> - **Recognize failure modes by name:** if you notice yourself doing structure-scan over content-scan, asserting confident-without-verification, or letting the user surface things you should have surfaced — name the pattern.
-> - **Meta-test:** at any point ask "is the user doing work I should be doing?" If yes, absorb it back.
-> - **Retrospective surfacing:** widen scope of category 4 — items raised in conversation but not resolved by close, surface and either resolve, canonicalize, or escalate.
+> **Step 1 — Build a change-list (mandatory pre-scan).** Without an explicit list, the subsequent checks become memory-driven spot-checks that miss things. Enumerate:
 >
-> Then in **one message with parallel tool calls** (do NOT serialize), scan: (1) git state — working tree clean, commits made, pushed to origin; (2) layer files current — `RESUMING.md` + `SESSION_NOTES.md` + `DECISIONS.md` + `PROJECT_CONTEXT.md` reflect end-of-session reality, with cross-file consistency on any counts/positions/paths/IDs that were changed during the session; (3) any "in flight: X" notes in `RESUMING.md` still un-removed (un-removed means action incomplete); (4) conversation-only artifacts that haven't been canonicalized, plus any `inbox/` relay files acted-on but not yet archived; (5) background processes Claude started, cleaned up; (6) unanswered questions Claude asked the user that are pending response; (7) cross-project directives in other projects' `RESUMING.md` and recent `SESSION_NOTES.md` intended for the current session; (8) memory-write evaluation — did the user correct your approach in a way applicable to future sessions? (9) **cross-reference integrity** — for each artifact this session created or substantively updated, check (a) its forward references exist and are canonical, (b) referenced artifacts have the appropriate back-reference. The cross-reference graph isn't covered by Cat 2 (which checks values that changed). Report findings explicitly. Don't add new rules during `/close`.
+> - **A. New artifacts created** — full paths of new files (decisions, ideas, questions, risks, reasoning, slash commands, scripts, docs, inbox relays, memory files).
+> - **B. Existing artifacts substantively updated** — full paths of files with material content changes (not typo fixes).
+> - **C. Values that changed** — numbers, identifiers, commit hashes, counts, paths, status markers that took new values. Each entry is a **literal search string** to grep for (e.g., "8-category" if a rule count went 8 → 9; "<old-commit-hash>" if a repo moved past; "<RC-id> active" if status became resolved).
+> - **D. Status transitions** — items whose status changed; each lists old-status phrase + new-status phrase.
+>
+> **Step 2 — Run categories in PARALLEL, using the change-list as input.** In one message with parallel tool calls (do NOT serialize):
+>
+> 1. Git state — working tree clean, commits made, pushed to origin.
+> 2. **Cross-file consistency (PRESCRIPTIVE)** — for each value in change-list C and each old-status phrase in D, run literal `grep -rn "<value>"` across the workspace. Fix stale references. No memory-driven spot-checks.
+> 3. Any "in flight: X" notes in `RESUMING.md` un-removed.
+> 4. Conversation-only artifacts + persistent-but-unprocessed (`inbox/` files acted-on but not archived).
+> 5. Background processes Claude started — cleaned up.
+> 6. Unanswered questions Claude asked — pending response.
+> 7. Cross-project directives in other projects' `RESUMING.md` / recent `SESSION_NOTES.md`.
+> 8. Memory-write evaluation — did the user correct your approach in a way applicable to future sessions?
+> 9. **Cross-reference integrity (PRESCRIPTIVE)** — for each artifact in change-list A and B, check (a) forward refs exist + canonical, (b) reciprocal back-references on referenced artifacts, (c) hub/index page inclusion, (d) status-section-header sync, (e) status-snapshot drift.
+>
+> **Step 3 — Report as a table** (rows = change-list items, columns = categories, cells = "checked clean ✓" or "found stale, fixed: <details>"). **Don't claim "clean" until every row × relevant column has been processed** — the table is the mechanical guard against FM-02 (confident assurance based on incomplete check). Don't add new rules during `/close`.
 
 Build the command, commit it to your `~/.claude/commands/` directory, and use `/close` instead of asking "what's left?" verbally. The slash command makes the close-out checklist mechanical rather than dependent on Claude remembering to apply it. The Step 0 section above adds Session Integrity Protocols on top of the mechanical scan — the categories cover *what* to check; Step 0 covers *how* to check (proactive, comprehensive, self-aware, absorbing-not-deferring).
 
