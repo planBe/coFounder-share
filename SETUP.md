@@ -134,6 +134,20 @@ Then in the launched Claude Code session, paste:
 
 **Pass:** Claude lists the nine reads (RESUMING, BOOTSTRAP, PERSONALITY, CROSS_CLAUDE_PROTOCOL, OPERATIONS, INCIDENT_LEARNINGS, PROJECT_CONTEXT, SESSION_NOTES, DECISIONS) and reports reading them via the Read tool. Working-style register matches what you put in `PERSONALITY.md`.
 
+## Step 7: (Optional) Workflow shortcuts
+
+Once you launch Claude Code in workspace projects routinely, the `cd ... && claude` chain gets old. Add a shell function to your `~/.zshrc` (or `~/.bashrc`) for each project you launch frequently:
+
+```bash
+# Shape — replace <WORKSPACE_DIR> and project names with your actual paths
+my-project() { cd <WORKSPACE_DIR>/my-project && claude "$@"; }
+another-project() { cd <WORKSPACE_DIR>/another-project && claude "$@"; }
+```
+
+Now `my-project` from any directory cd's into the project and launches Claude Code with the SessionStart hook firing. `source ~/.zshrc` (or open a new terminal) to pick up the changes.
+
+Light pattern — one function per frequently-used project. Skip for projects you only launch occasionally.
+
 **Fail diagnostics:**
 - Hook isn't firing: `jq empty ~/.claude/settings.json` to check JSON validity. Run the hook manually: `CLAUDE_PROJECT_DIR="$WORKSPACE_DIR/my-first-project" bash ~/.claude/cofounder-session-start.sh` — should output JSON with the bootstrap directive.
 - Hook fires but Claude ignores it: directives in `additionalContext` are advisory, not enforced. If this becomes a real problem you can add system-prompt-level enforcement via project-level `CLAUDE.md` files (the cascade auto-loads those).

@@ -61,6 +61,27 @@ A reasonable starting prompt for the slash command:
 
 Build the command, commit it to your `~/.claude/commands/` directory, and use `/close` instead of asking "what's left?" verbally. The slash command makes the close-out checklist mechanical rather than dependent on Claude remembering to apply it.
 
+### Adversarial code review: persona-based slash commands (optional)
+
+For projects with substantial code changes worth a thorough review before commit, build a persona-based adversarial reviewer slash command at `~/.claude/commands/<reviewer-name>-review.md`. The persona acts as a senior engineer with a specific lens (correctness, security, performance, accessibility, API design) and produces structured output (severity-tiered findings, refactored code, scored verdict). The friendly-default review pattern misses things the adversarial persona catches.
+
+A reasonable starting prompt for an adversarial reviewer slash command:
+
+> You are a Principal Staff Software Engineer with 20+ years of experience. You're reviewing the changes I'm about to share. Your standards are high; you don't sugarcoat. Output structure (required headings):
+>
+> - **Summary** — one-paragraph diagnosis
+> - **Critical** — must-fix before merge (correctness, security, data integrity)
+> - **Important** — should-fix soon (robustness, maintainability, performance)
+> - **Polish** — nice-to-have (style, naming, micro-clarity)
+> - **Refactored** — show the code as you would write it
+> - **Final Score (/10)** — calibrated; 7+ is shippable, 5–6 is "fix before ship," <5 is "rework"
+>
+> Don't soften severity. If the code is wrong, say so. If it's good, say that too.
+
+Build per lens — one slash command per persona. Common lenses to consider as the family grows: general code quality, security review, performance review, accessibility review, API design review. Each lives at `~/.claude/commands/<name>-review.md` and is invoked as `/<name>-review` from any session.
+
+Pairs with the `/close` pattern above (deterministic protocol enforcement at session boundaries) — both are slash-commands-as-discipline. The pattern composes: project-specific tool slash commands + `/close` for end-of-session integrity + adversarial reviewers for change-quality gates.
+
 ### Workspace-level files: layer vs reference
 
 Workspace-level files split into two kinds:
