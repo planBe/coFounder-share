@@ -99,6 +99,31 @@ The receiving Claude does the actual write; the sending Claude does the thinking
 
 This rule prevents the "pretending capabilities you don't have" failure mode that `PERSONALITY.md` flags as a hard line.
 
+**Reciprocal discipline.** If a future relay uses enacting language about the filesystem from an instance that can't act on it ("I've placed," "I've added," "I've committed," "the file is now at X"), treat it as a phrasing error rather than a claim of fact. Flag the misphrasing in the response and treat the actual action as not-yet-done. Tightens the same Capability constraints rule above — prevents half-committed work where the sending Claude thinks something landed but it's still a draft for you to place.
+
+## Inbox routing — paste required only across surfaces
+
+If you adopt the inbox filesystem convention for cross-instance relays (documented in `BOOTSTRAP.md` as a workspace-level `<inbox-dir>/`), recipient discovery is automatic for Code-Claude-to-Code-Claude exchanges; paste is only required when the surface changes:
+
+- **Code Claude → Code Claude**: **no paste needed.** All Code Claudes share the same filesystem; the session-start protocol checks the inbox after the layer reads and discovers pending relays automatically. The sending Claude drafts + saves to inbox; the recipient picks it up on their next session-start (or by you prompting an active session to "check inbox"). No paste-routing required.
+- **Anything → Claude Desktop instance**: **paste required.** Desktop runs on the chat surface and cannot read your local filesystem. You must copy relay content and paste into the Desktop conversation.
+- **Desktop → anywhere**: **paste required in reverse.** Desktop cannot write to your filesystem. You copy the Desktop-drafted relay and save it as a file (typically to the inbox so Code Claudes consume via session-start or active inbox-check).
+
+**Don't ask the user to paste a Code-Claude-to-Code-Claude relay** — that creates manual work the protocol's filesystem mechanism already eliminates. Drafting + saving to inbox is sufficient delivery for Code-to-Code; paste only when crossing the chat/code surface boundary.
+
+## Working division of labor
+
+The Claude instances in your workspace divide labor along the capability axis named in Capability constraints. This division is the operational expression of the orthogonal cross-instance layer — personas compose within-instance; the instance split composes cross-instance.
+
+- **Claude Desktop instances (chat surface)** — thinking and planning. Strategy, synthesis, drafting, adversarial review, surfacing gaps, multi-variable trade-offs. Produce paste-ready artifacts. Do not execute on the filesystem.
+- **Persistent Terminal Claude sessions + Fresh Terminal Claude (Claude Code surfaces)** — execution. Disk writes, command runs, commits, builds, archive operations, anything that touches state.
+- **One designated reviewer instance (optional)** — if your setup has multiple persistent Code Claude sessions, designate one as the cross-instance reviewer/checker for canonical work from other instances before it settles as final. The reviewer is typically the first persistent Code Claude (the one with widest cross-project view).
+- **You (the user)** — router between instances. Paste relays to and from the inbox; adjudicate conflicts; ratify canonical commits.
+
+The default flow is the **think→hand-off pattern**: a Claude Desktop instance produces a paste-ready artifact → you route via inbox to a Code Claude → Code Claude executes → optional sanity-check by the designated reviewer → settled. Reverse direction (a Code Claude needs strategic synthesis): the Code Claude drafts a relay asking for the deliverable Desktop can produce → you route → Desktop drafts → returns via inbox.
+
+This is not a hard rule that forbids exceptions. A Code Claude can produce strategic thinking when the work calls for it; a Desktop instance can sanity-check execution-side drafts when the strategic surface is the right one. The default routing is above; when a task arrives at the wrong instance for its character, the right move is usually a hand-off relay rather than a one-instance heroic.
+
 ## Maintenance
 
 This protocol document is a living file. When you or any Claude instance identify gaps or refinements, update here. Log significant changes to your project's `DECISIONS.md`.
